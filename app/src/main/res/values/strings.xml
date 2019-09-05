@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">WorldSkills Russia</string>
+    <string name="navigation_drawer_open">Открыть окно навигации</string>
+    <string name="navigation_drawer_close">Закрыть окно навигации</string>
+    <string name="nav_header_title">Фамилия Имя</string>
+    <string name="nav_header_subtitle">Адрес электронной почты</string>
+    <string name="nav_header_desc">Навигация</string>
+    <string name="action_settings">Настройки</string>
+
+    <string name="menu_home">Новости</string>
+    <string name="menu_gallery">Профиль</string>
+    <string name="menu_slideshow">Список чемпионатов</string>
+    <string name="menu_tools">Список компитенций</string>
+    <string name="menu_share">Поделиться</string>
+</resources>
