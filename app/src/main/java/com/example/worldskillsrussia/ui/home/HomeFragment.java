@@ -1,5 +1,7 @@
 package com.example.worldskillsrussia.ui.home;
 
+import android.app.Activity;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +27,20 @@ public class HomeFragment extends Fragment {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
+        LinearLayout l = root.findViewById(R.id.news_layout);
+        //тестовый блок, потом удалить!
+        Post post0 = new Post(getActivity().getResources().getDrawable(R.drawable.one), "one", null);
+        Post post1 = new Post(getActivity().getResources().getDrawable(R.drawable.two), "two", null);
+        Post post2 = new Post(getActivity().getResources().getDrawable(R.drawable.three), "three", null);
+        Post post3 = new Post(getActivity().getResources().getDrawable(R.drawable.four), "four", null);
+        Post post4 = new Post(getActivity().getResources().getDrawable(R.drawable.wsr_logo), "WSR", null);
+        l.addView(post0.onCreateView(inflater, container, savedInstanceState));
+        l.addView(post1.onCreateView(inflater, container, savedInstanceState));
+        l.addView(post2.onCreateView(inflater, container, savedInstanceState));
+        l.addView(post3.onCreateView(inflater, container, savedInstanceState));
+        l.addView(post4.onCreateView(inflater, container, savedInstanceState));
 
         return root;
     }
+
 }

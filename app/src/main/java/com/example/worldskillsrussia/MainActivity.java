@@ -1,8 +1,11 @@
 package com.example.worldskillsrussia;
 
+import android.content.Intent;
 import android.graphics.drawable.Animatable;
 import android.os.Bundle;
 
+import com.example.worldskillsrussia.ui.home.Post;
+import com.example.worldskillsrussia.ui.home.PostData;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -25,7 +28,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private AppBarConfiguration mAppBarConfiguration;
 
@@ -75,5 +78,15 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view.getClass().equals(Post.class)){
+            Intent intent = new Intent(this, PostActivity.class);
+            //intent.putExtra("postData", pd);
+            startActivity(intent);
+        }
+
     }
 }
