@@ -1,64 +1,97 @@
 package com.example.worldskillsrussia;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.view.View;
-
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
+import android.os.Build;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity {
 
+    private EditText email;
+    private EditText pass;
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    protected void onCreate(final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        if(autoLogin()) finish();
+        email = findViewById(R.id.email_lable);
+        pass = findViewById(R.id.pass_label);
+        Button b = findViewById(R.id.login_in_button);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!email.getText().toString().equals("") || pass.getText().toString().length() > 5){
+                    if(hasInDatabase(email.getText().toString(), pass.getText().toString())) {
+                        MainActivity.setlogin(email.getText().toString(), pass.getText().toString());
 
-    }
-
-    public static boolean autoLogin() {
-        File f = new File("app.data.login.txt");
-        if(f.exists()){
-            try {
-                FileReader fr = new FileReader(f);
-                int i;
-                String s = "";
-                while((i = fr.read()) != -1){
-                    if((char) i == '|') {
-                        MainActivity.setLogin(s);
-                        continue;
-                    } else if (((char) i == '+')) {
-                        MainActivity.setPass(s);
-                        break;
+                        finish();
+                    } else
+                    {
+                        Toast.makeText(getApplicationContext(), "Неправильное имя пользователя или пароль", Toast.LENGTH_LONG);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                            email.setBackgroundColor(Color.RED);
+                            pass.setBackgroundColor(Color.RED);
+                        }
                     }
-                    s += (char) i;
+                } else {
+                    Toast.makeText(getApplicationContext(), "Введите имя пользователся или пароль", Toast.LENGTH_LONG).show();
                 }
-                return true;
-            } catch (Exception e) {
-                e.printStackTrace();
             }
-        }
-        return false;
-    }
-    public void save(String login, String pass) {
-        File f = new File("app.data.login.txt");
-        try{
-            if(!f.exists()) f.createNewFile();
-            FileWriter fw = new FileWriter(f);
-            fw.write(MainActivity.getLogin() +"|" + MainActivity.getPass() + "+");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        });
 
     }
-    public void onClick(View v) {
+    private boolean hasInDatabase(String login, String pass) {
+        return true;
+        //TODO Связь с датабазой
+    }
+    private void save(String login, String pass){
+        File f = new File("app//data//login.txt");
+        if(!f.exists())
+            try {f.createNewFile(); } catch (Exception e) {Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT);}
+        if(f.canWrite()) {
+            try(FileWriter fw = new FileWriter(f)) {
+                fw.write(login+"(" + pass + ")");
+            } catch (Exception e)  {Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT);}
+
+        } else{ Toast.makeText(getApplicationContext(), "I cant write login data", Toast.LENGTH_SHORT);}
 
     }
+    public boolean autoLogin() {
+        File f = new File("app//data//login.txt");
+        if(!f.exists())
+            try {f.createNewFile(); return false;} catch (Exception e) {Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT);}
+        if(f.canRead()) {
+            try(FileReader fr = new FileReader(f)) {
+                String login= "", pass = "";
+                String bufer = "";
+                int i;
+                while((i = fr.read()) != -1) {
+                    if("(".equals((char) i)) {
+                        login = bufer;
+                        bufer = "";
+                    } else if(")".equals((char) i)) {
+                        pass = bufer;
+                        break;
+                    }else {
+                        bufer += (char) i;
+                    }
+                }
+                if(hasInDatabase(login, pass)) {MainActivity.setlogin(login, pass); return true;}
+                else return false;
+            } catch (Exception e)  {Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT);}
+
+        } else{ Toast.makeText(getApplicationContext(), "I cant read login data", Toast.LENGTH_SHORT);}
+
+        return  false;
+    }
+
 }

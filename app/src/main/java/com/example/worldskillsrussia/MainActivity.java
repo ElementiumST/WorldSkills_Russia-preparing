@@ -27,13 +27,15 @@ import android.view.Menu;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
     private AppBarConfiguration mAppBarConfiguration;
-    private static String login;
-    private static String pass;
+
+    private static boolean isAuth = false;
+    private static String email;
+    private static String password;
     private boolean firstLaunch = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,37 +94,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if(!isAuth()) return;
+        Object[] arr = getUserData(email, password);
+        TextView etv = findViewById(R.id.email_header_lable);
+        TextView utv = findViewById(R.id.username_header_lable);
+        etv.setText((String)arr[0]);
+        utv.setText((String)arr[1]);
+
+
+    }
+    public static boolean isAuth() {
+        return isAuth;
+    }
+    public static void setlogin(String nemail, String npassword) {
+        isAuth = true;
+        email = nemail;
+        password = npassword;
+
+    }
+    private Object[] getUserData(String email, String pass) {
+        Object[] arr = new Object[3];
+        arr[1] = "username";
+        if(email.equals("starkov123123@gmail.com")) arr[1] = "stark";
+        arr[0] = email; arr[2] = pass;
+        return arr;
+    }
+
     public void onClick(View view) {
-        if(view.getClass().equals(Post.class)){
-            Intent intent = new Intent(this, PostActivity.class);
-            //intent.putExtra("postData", pd);
-            startActivity(intent);
+        if(view.getId() == R.id.user_image && !isAuth()){
+            Intent inf = new Intent(this, LoginActivity.class);
+            startActivity(inf);
         }
-
-    }
-    public void auth(View v)    {
-        if(login == null && pass == null) return;
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
-    }
-    public static void setAccount(String nlogin, String npass) {
-        login = nlogin;
-        pass = npass;
     }
 
-    public static void setLogin(String login) {
-        MainActivity.login = login;
-    }
-
-    public static void setPass(String pass) {
-        MainActivity.pass = pass;
-    }
-
-    public static String getLogin() {
-        return login;
-    }
-
-    public static String getPass() {
-        return pass;
-    }
 }
