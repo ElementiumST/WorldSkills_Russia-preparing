@@ -28,12 +28,13 @@ public class HomeFragment extends Fragment {
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         LinearLayout l = root.findViewById(R.id.news_layout);
-        //тестовый блок, потом удалить!
-        Post post0 = new Post(getActivity().getResources().getDrawable(R.drawable.one), "one", null);
-        Post post1 = new Post(getActivity().getResources().getDrawable(R.drawable.two), "two", null);
-        Post post2 = new Post(getActivity().getResources().getDrawable(R.drawable.three), "three", null);
-        Post post3 = new Post(getActivity().getResources().getDrawable(R.drawable.four), "four", null);
-        Post post4 = new Post(getActivity().getResources().getDrawable(R.drawable.wsr_logo), "WSR", null);
+        //тестовый блок, потом удалить
+
+        Post post0 = new Post(1, getActivity().getResources().getDrawable(R.drawable.one), "one", null);
+        Post post1 = new Post(2, getActivity().getResources().getDrawable(R.drawable.two), "two", null);
+        Post post2 = new Post(3, getActivity().getResources().getDrawable(R.drawable.three), "three", null);
+        Post post3 = new Post(4, getActivity().getResources().getDrawable(R.drawable.four), "four", null);
+        Post post4 = new Post(5, getActivity().getResources().getDrawable(R.drawable.wsr_logo), "WSR", null);
         l.addView(post0.onCreateView(inflater, container, savedInstanceState));
         l.addView(post1.onCreateView(inflater, container, savedInstanceState));
         l.addView(post2.onCreateView(inflater, container, savedInstanceState));

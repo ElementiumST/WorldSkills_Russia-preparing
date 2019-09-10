@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "853495668459",
+    "firebase_url": "https://worldskillsrussia-cd854.firebaseio.com",
+    "project_id": "worldskillsrussia-cd854",
+    "storage_bucket": "worldskillsrussia-cd854.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:853495668459:android:1be6415fe00b78fe46a8ae",
+        "android_client_info": {
+          "package_name": "com.example.worldskillsrussia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "853495668459-a8el1iaqk44284u4b5k0kenqfbi8e7pd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.worldskillsrussia",
+            "certificate_hash": "ffd6d59cefa15b19dba5258a40deed55a7a4d753"
+          }
+        },
+        {
+          "client_id": "853495668459-bav25qtbpaigr0ckkbmtn6gdbbkkbcpu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALz86MmHLYFakAz_9MJ8WFpXPB7vXVfq0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "853495668459-bav25qtbpaigr0ckkbmtn6gdbbkkbcpu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

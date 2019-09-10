@@ -5,7 +5,7 @@ import android.graphics.drawable.Animatable;
 import android.os.Bundle;
 
 import com.example.worldskillsrussia.ui.home.Post;
-import com.example.worldskillsrussia.ui.home.PostData;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -27,19 +27,30 @@ import android.view.Menu;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private AppBarConfiguration mAppBarConfiguration;
-
+    private static String login;
+    private static String pass;
+    private boolean firstLaunch = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ImageView iw = findViewById(R.id.logo);
-        Animation logoAnim = AnimationUtils.loadAnimation(this, R.anim.animation);
-        iw.startAnimation(logoAnim);
+        if(!LoginActivity.autoLogin())
+        {
+            Toast.makeText(getApplicationContext(), "Вы не авторизованны! Контент ограничен.", Toast.LENGTH_LONG).show();
+        }
+        if (!firstLaunch) {
+            ImageView iw = findViewById(R.id.logo);
+            Animation logoAnim = AnimationUtils.loadAnimation(this, R.anim.animation);
+            iw.startAnimation(logoAnim);
+            firstLaunch = true;
+        }
+
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -88,5 +99,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }
 
+    }
+    public void auth(View v)    {
+        if(login == null && pass == null) return;
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
+    public static void setAccount(String nlogin, String npass) {
+        login = nlogin;
+        pass = npass;
+    }
+
+    public static void setLogin(String login) {
+        MainActivity.login = login;
+    }
+
+    public static void setPass(String pass) {
+        MainActivity.pass = pass;
+    }
+
+    public static String getLogin() {
+        return login;
+    }
+
+    public static String getPass() {
+        return pass;
     }
 }
