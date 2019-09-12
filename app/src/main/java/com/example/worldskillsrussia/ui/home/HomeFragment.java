@@ -16,6 +16,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.worldskillsrussia.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 public class HomeFragment extends Fragment {
 
@@ -28,6 +30,14 @@ public class HomeFragment extends Fragment {
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         LinearLayout l = root.findViewById(R.id.news_layout);
+        FloatingActionButton fab = root.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Обновление новостей...", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
         //тестовый блок, потом удалить
 
         Post post0 = new Post(1, getActivity().getResources().getDrawable(R.drawable.one), "one", null);

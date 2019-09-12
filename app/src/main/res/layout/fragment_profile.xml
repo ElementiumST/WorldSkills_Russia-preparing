@@ -8,7 +8,9 @@
     <TableLayout
         android:id="@+id/tableLayout"
         android:layout_width="match_parent"
-        android:layout_height="35pt"
+        android:layout_height="75dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TableRow
@@ -17,9 +19,8 @@
 
             <ImageView
                 android:id="@+id/imageView2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:srcCompat="@mipmap/ic_launcher_round" />
+                android:layout_width="75dp"
+                android:layout_height="75dp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -29,14 +30,14 @@
                 <TextView
                     android:id="@+id/prof_fullname_res"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="45dp"
                     android:textSize="35sp" />
 
                 <TextView
                     android:id="@+id/prof_status"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textSize="17sp" />
+                    android:textSize="22sp" />
             </LinearLayout>
         </TableRow>
 
@@ -59,14 +60,18 @@
             android:id="@+id/prof_loguot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:text="@string/login_out" />
     </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="125pt"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2">
 
         <LinearLayout
             android:id="@+id/comp_list_comp"
@@ -76,8 +81,10 @@
     </ScrollView>
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="125pt"
+        android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tableLayout">
 

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,7 +32,7 @@ public class Post extends Fragment{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_post, container, false);
-        ImageButton ib = root.findViewById(R.id.goto_post_button);
+        ImageView ib = root.findViewById(R.id.post_image);
         TextView tv = root.findViewById(R.id.post_title);
         ib.setImageDrawable(pd.getImage());
         ib.setOnClickListener(

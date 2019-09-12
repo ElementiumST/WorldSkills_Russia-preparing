@@ -3,7 +3,7 @@
     <string name="navigation_drawer_open">Открыть окно навигации</string>
     <string name="navigation_drawer_close">Закрыть окно навигации</string>
     <string name="nav_header_title">Фамилия Имя</string>
-    <string name="nav_header_subtitle">Адрес электронной почты</string>
+    <string name="email_address">Адрес электронной почты</string>
     <string name="nav_header_desc">Навигация</string>
     <string name="action_settings">Настройки</string>
     <string name="login">Авторизация</string>
@@ -16,10 +16,7 @@
     <string name="title_activity_login">Авторизация</string>
     <string name="prompt_email">Почта</string>
     <string name="prompt_password">Пароль</string>
-    <string name="action_sign_in">Авторизируйтесь или зарегистрируйтесь</string>
-    <string name="action_sign_in_short">Авторизация</string>
+    <string name="login_out">Выйти</string>
     <string name="welcome">"Добро пожаловать"</string>
-    <string name="invalid_username">Неверное имя пользователя</string>
-    <string name="invalid_password">Пороль должен содоржать от 6 сиволов и более</string>
     <string name="login_failed">"Неправильное имя пользователя или пароль"</string>
 </resources>

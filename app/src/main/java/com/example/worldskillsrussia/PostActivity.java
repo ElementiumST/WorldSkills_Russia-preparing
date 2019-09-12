@@ -32,7 +32,6 @@ public class PostActivity extends AppCompatActivity {
         setSupportActionBar(tb);
 
 /*
-        System.out.println("111");
         PostData pd =(PostData) savedInstanceState.getSerializable("postData");
         Drawable image = pd.getImage();
         String title = pd.getTitle();
