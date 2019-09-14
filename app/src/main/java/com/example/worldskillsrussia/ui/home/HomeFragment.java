@@ -39,17 +39,26 @@ public class HomeFragment extends Fragment {
             }
         });
         //тестовый блок, потом удалить
-
-        Post post0 = new Post(1, getActivity().getResources().getDrawable(R.drawable.one), "one", null);
-        Post post1 = new Post(2, getActivity().getResources().getDrawable(R.drawable.two), "two", null);
-        Post post2 = new Post(3, getActivity().getResources().getDrawable(R.drawable.three), "three", null);
-        Post post3 = new Post(4, getActivity().getResources().getDrawable(R.drawable.four), "four", null);
-        Post post4 = new Post(5, getActivity().getResources().getDrawable(R.drawable.wsr_logo), "WSR", null);
-        l.addView(post0.onCreateView(inflater, container, savedInstanceState));
-        l.addView(post1.onCreateView(inflater, container, savedInstanceState));
-        l.addView(post2.onCreateView(inflater, container, savedInstanceState));
-        l.addView(post3.onCreateView(inflater, container, savedInstanceState));
-        l.addView(post4.onCreateView(inflater, container, savedInstanceState));
+        //===========================
+        PostView pv1 = new PostView();
+        pv1.onCreateView(inflater, l, 1);
+        PostView pv2 = new PostView();
+        pv1.onCreateView(inflater, l, 2);
+        PostView pv3 = new PostView();
+        pv1.onCreateView(inflater, l, 3);
+        PostView pv4 = new PostView();
+        pv1.onCreateView(inflater, l, 4);
+        PostView pv5 = new PostView();
+        pv1.onCreateView(inflater, l, 5);
+        PostView pv6 = new PostView();
+        pv1.onCreateView(inflater, l, 6);
+        PostView pv7 = new PostView();
+        pv1.onCreateView(inflater, l, 7);
+        PostView pv8 = new PostView();
+        pv1.onCreateView(inflater, l, 8);
+        PostView pv9 = new PostView();
+        pv1.onCreateView(inflater, l, 9);
+        //===========================
 
         return root;
     }

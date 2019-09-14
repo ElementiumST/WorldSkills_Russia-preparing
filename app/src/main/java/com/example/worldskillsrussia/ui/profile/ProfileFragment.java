@@ -1,5 +1,8 @@
 package com.example.worldskillsrussia.ui.profile;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -21,40 +24,54 @@ import com.example.worldskillsrussia.MainActivity;
 import com.example.worldskillsrussia.R;
 import com.example.worldskillsrussia.ui.home.Image;
 import com.example.worldskillsrussia.ui.login.LoginActivity;
+import com.example.worldskillsrussia.ui.login.UserData;
 
 public class ProfileFragment extends Fragment {
-
-    private ProfileViewModel profileViewModel;
-
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        profileViewModel =
-                ViewModelProviders.of(this).get(ProfileViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_profile, container, false);
-        DataBaseDialog dbd = new DataBaseDialog(this,((MainActivity) getActivity()).getUd() );
-        if(((MainActivity) getActivity()).getUd() == null) {
-            Intent intent = new Intent(getActivity(), LoginActivity.class);
-            startActivityForResult(intent, ((MainActivity) getActivity()).USER_DATA());
+    private boolean onLog = false;
+    View root;
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
+        root = inflater.inflate(R.layout.fragment_profile, container, false);
+        if(!((MainActivity) getActivity()).isAuth()) {
+            ((MainActivity) getActivity()).startLoginActivity();
+            onLog = true;
             return root;
         }
+        loadData();
+
+
+        return root;
+    }
+
+    @Override
+    public void onResume() {
+        if(!onLog){
+            loadData();
+        }
+        onLog = false;
+        super.onResume();
+
+    }
+    private void loadData(){
         Button extBtn = root.findViewById(R.id.prof_loguot);
         extBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences.Editor e = ((MainActivity) getActivity()).getSharedPreferences().edit();
-                e.clear();
-                e.commit();
-                getActivity().getSupportFragmentManager().beginTransaction().remove(getParentFragment()).commit();
+
+                ((MainActivity) getActivity()).setAuth(false);
+                Intent mStartActivity = new Intent(getContext(), MainActivity.class);
+                int mPendingIntentId = 123456;
+                PendingIntent mPendingIntent = PendingIntent.getActivity(getContext(), mPendingIntentId,    mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
+                AlarmManager mgr = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
+                mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+                System.exit(0);
             }
         });
+        UserData ud = ((MainActivity) getActivity()).getUd();
         ImageView view = root.findViewById(R.id.imageView2);
-        view.setImageDrawable(dbd.getImage());
+        view.setImageDrawable(ud.getImage());
         TextView stat = root.findViewById(R.id.prof_status);
-        stat.setText(dbd.getStatus());
+        stat.setText(ud.getStatus());
         TextView name = root.findViewById(R.id.prof_fullname_res);
         name.setText(((MainActivity) getActivity()).getUd().getName());
-
-
-        return root;
     }
 }
