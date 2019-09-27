@@ -21,4 +21,5 @@
     <string name="login_failed">Неправильное имя пользователя или пароль</string>
     <string name="register">Регистрация</string>
     <string name="login_in_facebook">Войти через фейсбук</string>
+    <string name="more">Ещё...</string>
 </resources>

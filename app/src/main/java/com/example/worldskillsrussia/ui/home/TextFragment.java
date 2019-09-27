@@ -15,16 +15,17 @@ import com.example.worldskillsrussia.R;
 
 public class TextFragment extends Fragment {
     String text;
+    public TextFragment(String text) {
+        this.text = text;
+    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_text, container);
+        View root = inflater.inflate(R.layout.fragment_text, container, false);
         ((TextView) root.findViewById(R.id.text_content)).setText(text);
         return root;
 
     }
-    public void setText(String text) {
-        this.text = text;
-    }
+
 }

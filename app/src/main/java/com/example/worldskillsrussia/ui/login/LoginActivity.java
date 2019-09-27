@@ -1,12 +1,9 @@
 package com.example.worldskillsrussia.ui.login;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,10 +13,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.worldskillsrussia.MainActivity;
 import com.example.worldskillsrussia.R;
-import com.example.worldskillsrussia.ui.home.Text;
+import com.example.worldskillsrussia.data.UserData;
+import com.google.firebase.firestore.auth.User;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
-
+    Date unlockDate = new Date();
+    int counter = 0;
     int REG_CODE = 1377;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,6 +33,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.login:
+
+                Date date = new Date();
+                if(date.before(unlockDate)){
+                    SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
+                    ((TextView) findViewById(R.id.errorlog)).setText("Превышено число попыток, попробуйте ещё раз через "+ sdf.format((new Date((unlockDate).getTime()-(new Date()).getTime()))) );
+                    return;
+                }
+                if(counter == 3) {
+                    ((TextView) findViewById(R.id.errorlog)).setText("Превышено число попыток, попробуйте ещё раз через 3 минуты");
+                    unlockDate = new Date((new Date()).getTime()+180000);
+                    counter = 0;
+                }
+                counter++;
                 EditText login = findViewById(R.id.username);
                 EditText pass = findViewById(R.id.password);
 
@@ -39,7 +54,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     ((TextView) findViewById(R.id.errorlog)).setText("Введите имя пользователя и пароль");
                 }
-                else if(!UserData.hasInDatabase(login.getText().toString(), pass.getText().toString())) {
+                UserData ud = MainActivity.databaseCollector.getUser(login.getText().toString(), pass.getText().toString());
+                if(ud == null) {
                     System.out.println(2);
                     ((TextView) findViewById(R.id.errorlog)).setText("Неправильное имя пользователя или пароль");
                     login.setBackgroundColor(Color.RED);
@@ -49,12 +65,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 else {
                     System.out.println(3);
                     Intent data = new Intent();
-                    data.putExtra("email", login.getText().toString());
-                    data.putExtra("pass", pass.getText().toString());
+                    data.putExtra("email", ud.getEmail());
+                    data.putExtra("pass", ud.getPass());
                     setResult(RESULT_OK, data);
                     finish();
-
                 }
+
                 break;
             case R.id.register_button:
                 Intent intent = new Intent(this, RegisterActivity.class);

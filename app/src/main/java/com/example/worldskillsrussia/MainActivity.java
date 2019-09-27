@@ -2,16 +2,14 @@ package com.example.worldskillsrussia;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 
+import com.example.worldskillsrussia.data.DatabaseCollector;
 import com.example.worldskillsrussia.ui.login.LoginActivity;
-import com.example.worldskillsrussia.ui.login.UserData;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.worldskillsrussia.data.UserData;
 
 import android.preference.PreferenceManager;
-import android.view.ContextMenu;
-import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.navigation.NavController;
@@ -20,6 +18,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.FirebaseDatabase;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -30,25 +29,26 @@ import android.view.Menu;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.prefs.Preferences;
+import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
 
+    private static Resources res;
     private boolean firstLaunch = false;
     UserData ud;
     private boolean isAuth;
     private SharedPreferences sharedPreferences;
     private final int USER_DATA = 1320;
     private NavigationView navigationView;
-    @Override
+    public static DatabaseCollector databaseCollector;
+
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         if (!firstLaunch) {
             ImageView iw = findViewById(R.id.logo);
@@ -56,14 +56,14 @@ public class MainActivity extends AppCompatActivity {
             iw.startAnimation(logoAnim);
             firstLaunch = true;
         }
-
+        if(res == null) res = getResources();
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         navigationView = findViewById(R.id.nav_view);
 
 
         if(sharedPreferences.contains("IS_LOGINED") && sharedPreferences.getBoolean("IS_LOGINED", true)) {
-            ud = UserData.createFromDatabase(sharedPreferences.getString("EMAIL", "unknown"),
-                    sharedPreferences.getString("PASSWORD", "unknown"), getResources());
+            ud = databaseCollector.getUser(sharedPreferences.getString("EMAIL", "unknown"),
+                    sharedPreferences.getString("PASSWORD", "unknown"));
             isAuth = true;
         } else {
             isAuth = false;
@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -88,6 +87,12 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
 
+
+
+
+        databaseCollector = new DatabaseCollector();
+        databaseCollector.getUser("asfdjaksdlj@", "sdhlfakljg");
+        databaseCollector.getUser("starkov123123@gmail.com", "igor1234555");
     }
 
 
@@ -118,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
         if(resultCode == RESULT_OK) {
             switch (requestCode) {
                 case USER_DATA:
-                    ud = UserData.createFromDatabase(data.getStringExtra("email"), data.getStringExtra("pass"), getResources());
+                    ud = databaseCollector.getUser(data.getStringExtra("email"), data.getStringExtra("pass"));
                     if (ud != null) {
                         SharedPreferences.Editor edit = sharedPreferences.edit();
                         isAuth = true;
@@ -160,5 +165,14 @@ public class MainActivity extends AppCompatActivity {
     }
     public static boolean isDatabaseOnline() {
         return true; // TODO database connect
+    }
+
+    public static Resources getRes() {
+        return res;
+    }
+
+    @Override
+    public File getDatabasePath(String name) {
+        return super.getDatabasePath(name);
     }
 }

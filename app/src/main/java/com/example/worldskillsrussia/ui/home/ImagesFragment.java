@@ -15,15 +15,16 @@ import com.example.worldskillsrussia.R;
 
 public class ImagesFragment extends Fragment {
     Drawable image;
+
+    public ImagesFragment(Drawable image){
+        this.image = image;
+    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_images, container);
+        View root = inflater.inflate(R.layout.fragment_images, container, false);
         ((ImageView) root.findViewById(R.id.image_content)).setImageDrawable(image);
         return root;
-    }
-    public void setImage(Drawable image){
-        this.image = image;
     }
 
 }

@@ -9,7 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.worldskillsrussia.MainActivity;
 import com.example.worldskillsrussia.R;
+import com.example.worldskillsrussia.data.UserData;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -72,7 +74,10 @@ public class RegisterActivity extends AppCompatActivity {
                 } else  rpass.setBackgroundColor(Color.GREEN);
 
                 if(allRight) {
-                    addToDatabase(new UserData(-1, name.getText().toString(), mail.getText().toString(), pass.getText().toString(), null, stat.getText().toString()));
+
+
+
+                    MainActivity.databaseCollector.createUser(new UserData(name.getText().toString(), mail.getText().toString().replace('.',','), pass.getText().toString(), null, stat.getText().toString()));
                     Intent data = new Intent();
                     data.putExtra("email", mail.getText().toString());
                     data.putExtra("pass", pass.getText().toString());

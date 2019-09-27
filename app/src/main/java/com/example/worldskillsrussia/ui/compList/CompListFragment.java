@@ -14,14 +14,12 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.worldskillsrussia.R;
 
-public class CompListFragment extends Fragment {
+class сompListFragment extends Fragment {
 
-    private CompListViewModel compListViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        compListViewModel =
-                ViewModelProviders.of(this).get(CompListViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_comp_list, container, false);
 
         return root;
